@@ -1,22 +1,26 @@
 /**
- * PolylineElement.
+ * PolylineElementInfo.
  * 線形状クラス
  * @param 
  * @return
  */
 
 /* メンバ変数 */
-function PolylineElement(){
-	this.m_line	= null;							//three.jsで線形状を描画するためのクラス
-	DrawModelBase.apply(this,arguments);		//DrawModelBaseを継承するための記述1
+function PolylineElementInfo(){
+	this.m_offsetArr	= new Array();			//オフセット配列
+	ElementInfoBase.apply(this,arguments);		//継承するための記述1
 };
-PolylineElement.prototype = new DrawModelBase;	//DrawModelBaseを継承するための記述2
+PolylineElementInfo.prototype = new ElementInfoBase;	//継承するための記述2
 
-//描画モデル実体の取得
-PolylineElement.prototype.getDrawElement = function(){
-	return this.m_line;
+/* 単純なセッタ・ゲッタ */
+//オフセット配列の設定
+PolylineElementInfo.prototype.setOffsetArr = function(offsetArr){
+	this.m_offsetArr = offsetArr;
 };
-
+//オフセット配列の取得
+PolylineElementInfo.prototype.getOffsetArr = function(){
+	return this.m_offsetArr;
+};
 
 /**
  * createElement.
@@ -25,7 +29,7 @@ PolylineElement.prototype.getDrawElement = function(){
  * @param	colorBuff	: カラーバッファ配列
  * @return
  */	
-DrawModelBase.prototype.createElement = function( vertexBuff, colorBuff , lineWidth){
+PolylineElementInfo.prototype.createElement = function( vertexBuff, colorBuff , lineWidth){
 	if((vertexBuff.length == 0) || (vertexBuff.length%3 != 0)){
 		return ERROR_CODE_FAILD_CREEATE_INSTANCE;
 	}

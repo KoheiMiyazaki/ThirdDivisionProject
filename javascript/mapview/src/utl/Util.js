@@ -6,10 +6,12 @@
  */
 
 /* エラーコード */
-const ERROR_CODE_SUCCESS				=  0;
-const ERROR_CODE_FAILURE				=  1;
-const ERROR_CODE_FAILD_CREEATE_INSTANCE	= -1;
-
+const ERROR_CODE = {
+	ERROR_CODE_SUCCESS	:  0,	// 0:成功
+	ERROR_CODE_INVALID	: -1,	//-1:不正値
+	ERROR_CODE_FAILD	: -2,	//-2:失敗
+	NUM_ERROR_CODE		:  2	//  :エラーコード数
+};
 
 /**
  * getWindowSize.

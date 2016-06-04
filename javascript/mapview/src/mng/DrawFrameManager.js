@@ -47,7 +47,7 @@ DrawFrameManager.prototype.initWebGL = function(){
 	//レンダラの作成・メンバ変数に設定
 	g_renderer = new THREE.WebGLRenderer();
 	g_renderer.setSize( GL_ORTHO_PARAM_CAMERA_WIDTH, GL_ORTHO_PARAM_CAMERA_HEIGHT );
-	var color = 0xffffff;
+	var color = 0xfefefefe;
 	g_renderer.setClearColor( new THREE.Color(color) );//背景色
 	document.body.appendChild( g_renderer.domElement );
 	
@@ -64,14 +64,14 @@ DrawFrameManager.prototype.drawFrame = function(){
 	( function drawFrameLoop () {
 		requestAnimationFrame( drawFrameLoop );			//次のフレーム描画を登録
 
-		/* ▽ 毎フレーム行う処理内容を記述 ▽ */
+/*▽--------------------毎フレーム行う処理内容を記述--------------------▽*/
 		if(g_mapMeshArr.length == 0){ return; }
 		
 		//地図メッシュを描画
 		drawMapMesh();
 		
 		g_renderer.render( g_scene, g_camera );			//描画処理
-		/* △ 毎フレーム行う処理内容を記述 △ */
+/*△--------------------毎フレーム行う処理内容を記述--------------------△*/
 
   } )();
 };
@@ -100,8 +100,7 @@ function drawMapMesh(){
 			if(oneDrawElement == null){ continue; }
 			g_scene.add(oneDrawElement);//シーンに追加
 			oneDrawModel.setIsAddScene(true);//シーン追加状態を保持
-		}
-		
+		}	
 	}
 };
 
@@ -112,30 +111,24 @@ function drawMapMesh(){
  * @return
  */	
 DrawFrameManager.prototype.craeteTestMapMesh = function(){
-	//地図メッシュの作成
-	var samplePolygonMesh	= new MapMesh();
-	//描画モデルの作成
-	var polygonElement		= new PolygonElement();
-	var polygonVertexBuff	= [ 360,30,0, -360,30,0, -360,-30,0, 360,-30,0];
-	var polygonIndexBuff	= [ 0,1,2, 0,2,3];	
-	var polygonColorBuff	= [	0xe6e6e6, 0xe6e6e6, 0xe6e6e6, 0xe6e6e6];
-	polygonElement.createElement(polygonVertexBuff,polygonIndexBuff,polygonColorBuff);
-	//メッシュに描画モデルを設定
-	samplePolygonMesh.setDrawModel(polygonElement);
-	//描画地図メッシュ配列に追加
-	g_mapMeshArr.push(samplePolygonMesh);
+	
+	var result = ERROR_CODE.ERROR_CODE_INVALID;
 	
 	//地図メッシュの作成
-	var samplePolylineMesh	= new MapMesh();
+	var fullVectorMesh	= new MapMesh();
+	fullVectorMesh.setDataType(DATA_TYPE.DATA_TYPE_FULLVECTOR);//フルベクトルデータ
+	//描画情報配列の作成
+	result = fullVectorMesh.createElementInfoArr();
+	if(result != ERROR_CODE.ERROR_CODE_SUCCESS){
+		return result;
+	}
 	//描画モデルの作成
-	var polylineElement		= new PolylineElement();
-	var polylineVertexBuff	= [ 360,30,0, -360,30,0, -360,-30,0, 360,-30,0 ,360,30,0 ];	
-	var polylineColorBuff	= [	0xef008c, 0xef008c, 0xef008c, 0xef008c, 0xef008c ];
-	var lineWidth = 5;
-	polylineElement.createElement(polylineVertexBuff,polylineColorBuff,lineWidth);
-	//メッシュに描画モデルを設定
-	samplePolylineMesh.setDrawModel(polylineElement);
-	g_mapMeshArr.push(samplePolylineMesh);
+	result = fullVectorMesh.createDrawElementArr();
+	if(result != ERROR_CODE.ERROR_CODE_SUCCESS){
+		return result;
+	}
 	
-	return;
+	g_mapMeshArr.push(fullVectorMesh);
+
+	return result;
 };
