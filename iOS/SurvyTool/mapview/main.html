@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>サーベイ端末デモver.000</title>
+</head>
+<body>
+<script src="lib/three/three.js"></script>
+<script src="lib/three/render/Projector.js"></script>
+<script src="lib/three/render/CanvasRenderer.js"></script>
+<script src="src/utl/Util.js"></script>
+<script src="src/mng/DrawFrameManager.js"></script>
+<script src="src/mdl/DrawModelBase.js"></script>
+<script src="src/elm/ElementInfoBase.js"></script>
+<script src="src/elm/PolylineElementInfo.js"></script>
+<script src="src/elm/PolygonElementInfo.js"></script>
+<script src="src/elm/TextElementInfo.js"></script>
+<script src="src/map/MapMesh.js"></script>
+<script>
+
+//main関数
+var main = function () {
+            
+    //描画管理クラスのオブジェクト作成
+    var m_dfm = new DrawFrameManager();
+
+    //WebGLの初期化
+	m_dfm.initWebGL();
+	
+	//サンプル形状の作成
+	m_dfm.craeteTestMapMesh();
+	
+	//描画ループ開始
+	m_dfm.drawFrame();    
+};
+
+//window表示にmain関数呼び出し
+window.addEventListener( 'DOMContentLoaded', main, false );
+
+</script>
+</body>
+</html>
